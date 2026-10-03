@@ -2,6 +2,10 @@
 
 A responsive, bilingual spinning-wheel game built with semantic HTML, modular CSS, and vanilla JavaScript. It supports JSON-configured prizes, weighted winner selection, animated prize effects, and persistent inventory management.
 
+## Live demo
+
+[Live demo](https://the-star-practical-test2.vercel.app/)
+
 ## Features
 
 - Equal-sized wheel slices for every unique prize
