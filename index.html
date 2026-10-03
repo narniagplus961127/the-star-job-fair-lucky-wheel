@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A configurable bilingual spinning wheel game for The Star Job Fair."
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <link rel="stylesheet" href="/src/styles/index.css" />
+    <title>Job Fair Lucky Wheel</title>
+  </head>
+  <body class="is-loading">
+    <a class="skip-link" href="#game-main" data-i18n="common.skip">Skip to game</a>
+
+    <div class="app-shell">
+      <header class="site-header">
+        <div class="site-header-content content-container">
+          <a class="brand" href="#game-main" aria-label="Job Fair Lucky Wheel home">
+            <span class="brand-mark" aria-hidden="true">T</span>
+            <span class="brand-copy">
+              <strong data-game-title>Job Fair Lucky Wheel</strong>
+              <small data-i18n="header.eyebrow">The Star Job Fair 2026</small>
+            </span>
+          </a>
+
+          <div class="header-actions">
+            <label class="language-control">
+              <span class="sr-only" data-i18n="header.language">Language</span>
+              <select id="language-select" aria-label="Language">
+                <option value="en">EN</option>
+                <option value="ms">BM</option>
+              </select>
+            </label>
+            <button id="open-setup" class="button button-quiet" type="button">
+              <span class="button-icon" aria-hidden="true">⚙</span>
+              <span data-i18n="header.manage">Manage game</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main id="game-main" class="game-layout content-container" tabindex="-1">
+        <section class="stage-heading" aria-labelledby="game-heading">
+          <p class="eyebrow" data-i18n="game.eyebrow">Try your luck</p>
+          <h1 id="game-heading" data-i18n="game.title">Spin. Win. Celebrate.</h1>
+          <p class="stage-description" data-i18n="game.description">
+            Spin once per attendee session for a chance to win one of the available prizes.
+          </p>
+        </section>
+
+        <div id="game-status" class="notice" role="status" aria-live="polite" hidden></div>
+
+        <div class="wheel-area">
+          <div class="wheel-frame">
+            <div class="wheel-pointer" aria-hidden="true"></div>
+            <canvas
+              id="prize-wheel"
+              class="prize-wheel"
+              width="720"
+              height="720"
+              aria-label="Prize wheel"
+            ></canvas>
+            <div id="wheel-empty-state" class="wheel-empty-state" role="status" hidden>
+              <span class="wheel-empty-icon" aria-hidden="true">!</span>
+              <strong class="wheel-empty-title" data-i18n="game.emptyTitle">
+                No prizes remaining
+              </strong>
+              <span class="wheel-empty-description" data-i18n="game.emptyDescription">
+                All prizes have been won. Reset the inventory in Manage game to continue.
+              </span>
+            </div>
+            <button
+              id="wheel-spin-button"
+              class="wheel-hub"
+              type="button"
+              aria-label="Spin the wheel"
+              data-i18n-aria-label="game.spin"
+              disabled
+            >
+              <span class="wheel-hub-icon" aria-hidden="true">★</span>
+            </button>
+          </div>
+
+          <div class="spin-controls">
+            <button id="spin-button" class="button button-spin" type="button" disabled>
+              <span data-i18n="game.spin">Spin the wheel</span>
+            </button>
+            <p id="spin-hint" class="spin-hint" data-i18n="game.loading">Preparing the wheel…</p>
+          </div>
+        </div>
+
+        <aside class="inventory-panel" aria-labelledby="inventory-heading">
+          <div class="inventory-heading-row">
+            <div>
+              <h2 id="inventory-heading" data-i18n="inventory.title">Prizes remaining</h2>
+            </div>
+            <span id="total-remaining" class="inventory-total">0</span>
+          </div>
+          <div id="prize-list" class="prize-list" aria-live="polite"></div>
+          <p class="storage-note" data-i18n="inventory.localNote">
+            Inventory is saved on this browser and device.
+          </p>
+        </aside>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer-content content-container">
+          <p class="site-footer-note" data-i18n="footer.note">
+            Demo website for the practical assessment.
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <dialog
+      id="result-dialog"
+      class="app-dialog result-dialog"
+      aria-labelledby="result-title"
+      aria-describedby="result-message"
+    >
+      <div id="celebration-layer" class="celebration-layer" aria-hidden="true"></div>
+      <div class="dialog-body result-body">
+        <div class="result-image-frame">
+          <img id="result-image" class="result-image" alt="" />
+        </div>
+        <p id="result-kicker" class="eyebrow result-kicker"></p>
+        <h2 id="result-title" class="result-title"></h2>
+        <p id="result-message" class="result-message"></p>
+        <button id="close-result" class="button button-primary" type="button">
+          <span data-i18n="common.continue">Continue</span>
+        </button>
+      </div>
+    </dialog>
+
+    <dialog id="setup-dialog" class="app-dialog setup-dialog" aria-labelledby="setup-title">
+      <div class="dialog-body">
+        <div class="dialog-heading-row">
+          <div>
+            <p class="eyebrow" data-i18n="setup.eyebrow">Game setup</p>
+            <h2 id="setup-title" data-i18n="setup.title">Manage game</h2>
+          </div>
+          <button
+            id="close-setup"
+            class="icon-button"
+            type="button"
+            aria-label="Close setup"
+            data-i18n-aria-label="common.close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <p class="setup-intro" data-i18n="setup.intro">
+          Load a game, review the JSON format or manage the current prize inventory.
+        </p>
+
+        <div class="setup-global-actions">
+          <button id="export-config" class="button button-quiet" type="button">
+            <span data-i18n="setup.export">Export current JSON</span>
+          </button>
+        </div>
+
+        <div
+          class="setup-tabs"
+          role="tablist"
+          aria-label="Game management"
+          data-i18n-aria-label="setup.tabsLabel"
+        >
+          <button
+            id="setup-tab-load"
+            class="setup-tab is-active"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="setup-panel-load"
+          >
+            <span data-i18n="setup.tabLoad">Load game</span>
+          </button>
+          <button
+            id="setup-tab-guide"
+            class="setup-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="setup-panel-guide"
+            tabindex="-1"
+          >
+            <span data-i18n="setup.tabGuide">JSON guide</span>
+          </button>
+          <button
+            id="setup-tab-inventory"
+            class="setup-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="setup-panel-inventory"
+            tabindex="-1"
+          >
+            <span data-i18n="setup.tabInventory">Inventory</span>
+          </button>
+        </div>
+
+        <div id="setup-error" class="form-error setup-error" role="alert" hidden></div>
+
+        <section
+          id="setup-panel-guide"
+          class="setup-tab-panel"
+          role="tabpanel"
+          aria-labelledby="setup-tab-guide"
+          hidden
+        >
+          <div class="configuration-guide">
+            <div class="configuration-guide-content">
+              <section class="configuration-guide-panel" aria-labelledby="json-example-title">
+                <h3 id="json-example-title" data-i18n="setup.jsonExampleTitle">
+                  JSON configuration example
+                </h3>
+                <p class="configuration-guide-description" data-i18n="setup.jsonExampleDescription">
+                  Use this structure for every custom game. Add one object to the prizes array for
+                  each unique prize.
+                </p>
+                <pre class="configuration-code"><code>{
+  "version": 1,
+  "game": {
+    "id": "job-fair-wheel-2026",
+    "title": {
+      "en": "Job Fair Lucky Wheel",
+      "ms": "Roda Bertuah Pameran Kerjaya"
+    },
+    "defaultLanguage": "en",
+    "theme": {
+      "primaryColor": "#d71920",
+      "accentColor": "#f4c542",
+      "backgroundColor": "#f5f3ef"
+    }
+  },
+  "prizes": [
+    {
+      "id": "grand-prize",
+      "name": {
+        "en": "Wireless Headphones",
+        "ms": "Fon Kepala Tanpa Wayar"
+      },
+      "quantity": 1,
+      "probability": 10,
+      "tier": "grand",
+      "graphic": "headphones.webp",
+      "color": "#d71920"
+    },
+    {
+      "id": "gift-pack",
+      "name": {
+        "en": "Job Fair Gift Pack",
+        "ms": "Pek Hadiah Pameran Kerjaya"
+      },
+      "quantity": 20,
+      "probability": 90,
+      "tier": "consolation",
+      "graphic": "gift-pack.webp",
+      "color": "#2878c8"
+    }
+  ]
+}</code></pre>
+              </section>
+
+              <section class="configuration-guide-panel" aria-labelledby="json-rules-title">
+                <h3 id="json-rules-title" data-i18n="setup.jsonRulesTitle">JSON field rules</h3>
+                <dl class="configuration-rules">
+                  <div class="configuration-rule">
+                    <dt>game.id / game.title</dt>
+                    <dd data-i18n="setup.ruleGame">
+                      A game ID and title in English and Bahasa Malaysia.
+                    </dd>
+                  </div>
+                  <div class="configuration-rule">
+                    <dt>defaultLanguage</dt>
+                    <dd data-i18n="setup.ruleLanguage">Use en or ms.</dd>
+                  </div>
+                  <div class="configuration-rule">
+                    <dt>theme</dt>
+                    <dd data-i18n="setup.ruleTheme">
+                      Primary, accent and background colours as six-digit hexadecimal values.
+                    </dd>
+                  </div>
+                  <div class="configuration-rule">
+                    <dt>id</dt>
+                    <dd data-i18n="setup.ruleId">A unique, non-empty text ID for the prize.</dd>
+                  </div>
+                  <div class="configuration-rule">
+                    <dt>name.en / name.ms</dt>
+                    <dd data-i18n="setup.ruleName">Prize names in both supported languages.</dd>
+                  </div>
+                  <div class="configuration-rule">
+                    <dt>quantity</dt>
+                    <dd data-i18n="setup.ruleQuantity">A whole number of zero or greater.</dd>
+                  </div>
+                  <div class="configuration-rule">
+                    <dt>probability</dt>
+                    <dd data-i18n="setup.ruleProbability">
+                      A positive number. All initial prize probabilities must total 100.
+                    </dd>
+                  </div>
+                  <div class="configuration-rule">
+                    <dt>tier</dt>
+                    <dd data-i18n="setup.ruleTier">grand, second, third or consolation.</dd>
+                  </div>
+                  <div class="configuration-rule">
+                    <dt>graphic</dt>
+                    <dd data-i18n="setup.ruleGraphic">
+                      The exact image filename, including its extension.
+                    </dd>
+                  </div>
+                  <div class="configuration-rule">
+                    <dt>color</dt>
+                    <dd data-i18n="setup.ruleColor">A six-digit hexadecimal colour.</dd>
+                  </div>
+                </dl>
+              </section>
+            </div>
+
+            <section class="upload-guide" aria-labelledby="upload-guide-title">
+              <h3 id="upload-guide-title" data-i18n="setup.uploadGuideTitle">
+                How to upload a custom game
+              </h3>
+              <ol class="upload-steps">
+                <li data-i18n="setup.uploadStepConfig">
+                  Prepare one JSON file using the format above and include at least two prizes.
+                </li>
+                <li data-i18n="setup.uploadStepImages">
+                  Prepare every image named in graphic. Use PNG, JPEG or WebP files up to 2 MB each.
+                </li>
+                <li data-i18n="setup.uploadStepSelect">
+                  Choose the JSON file, then select all referenced prize images together.
+                </li>
+                <li data-i18n="setup.uploadStepLoad">
+                  Select Load custom game. The files are validated before replacing the active game.
+                </li>
+              </ol>
+              <p class="upload-guide-note" data-i18n="setup.uploadGuideNote">
+                JSON and images are selected separately. Every image filename must exactly match its
+                graphic value, including uppercase letters and the file extension.
+              </p>
+            </section>
+          </div>
+        </section>
+
+        <section
+          id="setup-panel-load"
+          class="setup-tab-panel"
+          role="tabpanel"
+          aria-labelledby="setup-tab-load"
+        >
+          <button id="load-sample" class="button button-secondary full-width" type="button">
+            <span data-i18n="setup.sample">Load sample game</span>
+          </button>
+
+          <div class="divider"><span data-i18n="common.or">or</span></div>
+
+          <form id="custom-game-form" class="setup-form" novalidate>
+            <label class="file-field" for="config-file">
+              <span class="file-label" data-i18n="setup.configLabel">Configuration file</span>
+              <span class="file-help" data-i18n="setup.configHelp">Select one JSON file.</span>
+              <input id="config-file" type="file" accept="application/json,.json" required />
+            </label>
+
+            <label class="file-field" for="image-files">
+              <span class="file-label" data-i18n="setup.imagesLabel">Prize images</span>
+              <span class="file-help" data-i18n="setup.imagesHelp">
+                Select the PNG, JPEG or WebP files referenced by the JSON.
+              </span>
+              <input
+                id="image-files"
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                multiple
+                required
+              />
+            </label>
+
+            <button id="load-custom" class="button button-primary full-width" type="submit">
+              <span data-i18n="setup.load">Load custom game</span>
+            </button>
+          </form>
+        </section>
+
+        <section
+          id="setup-panel-inventory"
+          class="setup-tab-panel"
+          role="tabpanel"
+          aria-labelledby="setup-tab-inventory"
+          hidden
+        >
+          <div class="management-actions">
+            <h3 data-i18n="setup.inventoryTitle">Inventory controls</h3>
+            <p class="management-description" data-i18n="setup.inventoryDescription">
+              Restore every prize to its original quantity. This replaces the current remaining
+              quantities.
+            </p>
+            <button id="reset-inventory" class="button button-quiet full-width" type="button">
+              <span data-i18n="setup.reset">Reset inventory</span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </dialog>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+/* Compact desktop: 992px to 1199px */
+@media (min-width: 62rem) and (max-width: 74.9375rem) {
+  .stage-heading h1 {
+    max-width: none;
+    margin-inline: auto;
+    font-size: var(--font-size-display-compact);
+  }
+
+  .stage-description {
+    margin-inline: auto;
+  }
+
+  .wheel-frame {
+    width: min(100%, var(--wheel-max-width-compact));
+  }
+}
+
+/* Tablet and mobile: below 992px */
+@media (max-width: 61.9375rem) {
+  .game-layout {
+    grid-template-areas:
+      'intro'
+      'notice'
+      'wheel'
+      'inventory';
+    grid-template-columns: 1fr;
+  }
+
+  .inventory-panel {
+    width: 100%;
+    max-height: none;
+  }
+
+  .prize-list {
+    grid-template-columns: repeat(3, 1fr);
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .stage-heading {
+    text-align: center;
+  }
+
+  .stage-heading h1,
+  .stage-description {
+    margin-inline: auto;
+  }
+
+  .wheel-frame {
+    width: min(100%, var(--wheel-max-width-tablet));
+  }
+}
+
+/* Mobile: below 768px */
+@media (max-width: 47.9375rem) {
+  .content-container {
+    width: min(100% - var(--content-gutter-mobile), var(--content-max-width));
+  }
+
+  .site-header-content {
+    min-height: 4.8rem;
+  }
+
+  .brand-copy small {
+    display: none;
+  }
+
+  .header-actions .button {
+    padding-inline: 0.85rem;
+  }
+
+  .game-layout {
+    min-height: auto;
+    padding-block: 1.8rem;
+  }
+
+  .prize-list {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer-content {
+    display: grid;
+  }
+}
+
+@media (max-width: 31rem) {
+  .brand-copy strong {
+    max-width: 9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .header-actions .button span:last-child {
+    display: none;
+  }
+
+  .stage-heading h1 {
+    font-size: var(--font-size-display-mobile);
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "game": {
+    "id": "star-job-fair-2026",
+    "title": {
+      "en": "Job Fair Lucky Wheel",
+      "ms": "Roda Bertuah Pameran Kerjaya"
+    },
+    "defaultLanguage": "en",
+    "theme": {
+      "primaryColor": "#d71920",
+      "accentColor": "#f4c542",
+      "backgroundColor": "#f5f3ef"
+    }
+  },
+  "prizes": [
+    {
+      "id": "grand-prize",
+      "name": {
+        "en": "Wireless Headphones",
+        "ms": "Fon Kepala Tanpa Wayar"
+      },
+      "quantity": 1,
+      "probability": 2,
+      "tier": "grand",
+      "graphic": "headphones.svg",
+      "color": "#d71920"
+    },
+    {
+      "id": "smartwatch",
+      "name": {
+        "en": "Smartwatch",
+        "ms": "Jam Tangan Pintar"
+      },
+      "quantity": 3,
+      "probability": 5,
+      "tier": "second",
+      "graphic": "smartwatch.svg",
+      "color": "#f28c28"
+    },
+    {
+      "id": "shopping-voucher",
+      "name": {
+        "en": "Shopping Voucher",
+        "ms": "Baucar Beli-belah"
+      },
+      "quantity": 5,
+      "probability": 8,
+      "tier": "third",
+      "graphic": "voucher.svg",
+      "color": "#f4c542"
+    },
+    {
+      "id": "power-bank",
+      "name": {
+        "en": "Power Bank",
+        "ms": "Bank Kuasa"
+      },
+      "quantity": 8,
+      "probability": 12,
+      "tier": "consolation",
+      "graphic": "power-bank.svg",
+      "color": "#2a9d72"
+    },
+    {
+      "id": "bluetooth-speaker",
+      "name": {
+        "en": "Bluetooth Speaker",
+        "ms": "Pembesar Suara Bluetooth"
+      },
+      "quantity": 8,
+      "probability": 13,
+      "tier": "consolation",
+      "graphic": "speaker.svg",
+      "color": "#238f9d"
+    },
+    {
+      "id": "tote-bag",
+      "name": {
+        "en": "Tote Bag",
+        "ms": "Beg Tote"
+      },
+      "quantity": 12,
+      "probability": 18,
+      "tier": "consolation",
+      "graphic": "tote-bag.svg",
+      "color": "#2878c8"
+    },
+    {
+      "id": "water-bottle",
+      "name": {
+        "en": "Water Bottle",
+        "ms": "Botol Air"
+      },
+      "quantity": 12,
+      "probability": 20,
+      "tier": "consolation",
+      "graphic": "bottle.svg",
+      "color": "#5b5cc4"
+    },
+    {
+      "id": "gift-pack",
+      "name": {
+        "en": "Job Fair Gift Pack",
+        "ms": "Pek Hadiah Pameran Kerjaya"
+      },
+      "quantity": 20,
+      "probability": 22,
+      "tier": "consolation",
+      "graphic": "gift-pack.svg",
+      "color": "#e76f51"
+    }
+  ]
+}
