@@ -4,7 +4,7 @@ A responsive, bilingual spinning-wheel game built with semantic HTML, modular CS
 
 ## Live demo
 
-[Live demo](https://the-star-practical-test2.vercel.app/)
+[View the production website](https://the-star-practical-test2.vercel.app/)
 
 ## Features
 
