@@ -420,7 +420,7 @@
   }
 }
 
-@media (max-width: 47.9375rem) {
+@media (max-width: 767px) {
   .setup-global-actions .button {
     width: 100%;
   }

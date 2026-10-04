@@ -1,5 +1,5 @@
 /* Compact desktop: 992px to 1199px */
-@media (min-width: 62rem) and (max-width: 74.9375rem) {
+@media (min-width: 992px) and (max-width: 1199px) {
   .stage-heading h1 {
     max-width: none;
     margin-inline: auto;
@@ -16,7 +16,7 @@
 }
 
 /* Tablet and mobile: below 992px */
-@media (max-width: 61.9375rem) {
+@media (max-width: 991px) {
   .game-layout {
     grid-template-areas:
       'intro'
@@ -52,7 +52,7 @@
 }
 
 /* Mobile: below 768px */
-@media (max-width: 47.9375rem) {
+@media (max-width: 767px) {
   .content-container {
     width: min(100% - var(--content-gutter-mobile), var(--content-max-width));
   }
@@ -83,7 +83,7 @@
   }
 }
 
-@media (max-width: 31rem) {
+@media (max-width: 496px) {
   .brand-copy strong {
     max-width: 9rem;
     overflow: hidden;
