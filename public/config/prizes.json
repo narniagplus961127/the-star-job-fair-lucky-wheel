@@ -9,7 +9,7 @@
       "quantity": 1,
       "probability": 2,
       "tier": "grand",
-      "graphic": "headphones.svg",
+      "graphic": "headphones.jpg",
       "color": "#d71920"
     },
     {
@@ -21,7 +21,7 @@
       "quantity": 2,
       "probability": 5,
       "tier": "second",
-      "graphic": "smartwatch.svg",
+      "graphic": "smartwatch.jpg",
       "color": "#f28c28"
     },
     {
@@ -33,7 +33,7 @@
       "quantity": 2,
       "probability": 8,
       "tier": "third",
-      "graphic": "voucher.svg",
+      "graphic": "voucher.jpg",
       "color": "#f4c542"
     },
     {
@@ -45,7 +45,7 @@
       "quantity": 3,
       "probability": 12,
       "tier": "consolation",
-      "graphic": "power-bank.svg",
+      "graphic": "power-bank.jpg",
       "color": "#2a9d72"
     },
     {
@@ -57,7 +57,7 @@
       "quantity": 3,
       "probability": 13,
       "tier": "consolation",
-      "graphic": "speaker.svg",
+      "graphic": "speaker.jpg",
       "color": "#238f9d"
     },
     {
@@ -69,7 +69,7 @@
       "quantity": 3,
       "probability": 18,
       "tier": "consolation",
-      "graphic": "tote-bag.svg",
+      "graphic": "tote-bag.jpg",
       "color": "#2878c8"
     },
     {
@@ -81,7 +81,7 @@
       "quantity": 3,
       "probability": 20,
       "tier": "consolation",
-      "graphic": "bottle.svg",
+      "graphic": "bottle.jpg",
       "color": "#5b5cc4"
     },
     {
@@ -93,7 +93,7 @@
       "quantity": 3,
       "probability": 22,
       "tier": "consolation",
-      "graphic": "gift-pack.svg",
+      "graphic": "gift-pack.jpg",
       "color": "#e76f51"
     }
   ]

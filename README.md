@@ -15,7 +15,7 @@ A responsive, bilingual spinning-wheel game built with semantic HTML, modular CS
 - Distinct animations for grand, second, third-place, and consolation prizes
 - English and Bahasa Malaysia switching with i18next
 - JSON configuration and custom prize-image loading
-- Eight bundled sample prizes with individual graphics
+- Eight bundled sample prizes with individual JPG graphics
 - Browser persistence using IndexedDB
 - Inventory reset and current JSON export
 - Wheel-slice colours controlled by the prize configuration
@@ -84,7 +84,7 @@ The bundled configuration is located at `public/config/prizes.json` and includes
       "quantity": 1,
       "probability": 10,
       "tier": "grand",
-      "graphic": "headphones.webp",
+      "graphic": "headphones.jpg",
       "color": "#d71920"
     },
     {
@@ -96,7 +96,7 @@ The bundled configuration is located at `public/config/prizes.json` and includes
       "quantity": 20,
       "probability": 90,
       "tier": "consolation",
-      "graphic": "gift-pack.webp",
+      "graphic": "gift-pack.jpg",
       "color": "#2878c8"
     }
   ]
@@ -146,11 +146,13 @@ Recommended package structure:
 game-package/
 ├── game-config.json
 └── images/
-    ├── headphones.webp
-    └── gift-pack.webp
+    ├── headphones.jpg
+    └── gift-pack.jpg
 ```
 
 The browser requires the JSON and image files to be selected separately. Local computer paths such as `C:\Users\Name\Pictures\prize.webp` must not be stored in JSON.
+
+To try a custom upload using the bundled sample, select `public/config/prizes.json` and all eight JPG files in `public/images/prizes/`. You can also export the current sample JSON, edit its prize details, then upload it with those same images. JSON exports do not include image files.
 
 ## Prize storage
 
