@@ -140,17 +140,9 @@ Custom images must:
 - Match the JSON filenames exactly
 - Be no larger than 2 MB each
 
-Recommended package structure:
+Prepare one JSON configuration file and its matching prize images. Select the JSON using the configuration picker, then select all referenced images together using the image picker. Folder or ZIP uploads are not supported.
 
-```text
-game-package/
-├── game-config.json
-└── images/
-    ├── headphones.jpg
-    └── gift-pack.jpg
-```
-
-The browser requires the JSON and image files to be selected separately. Local computer paths such as `C:\Users\Name\Pictures\prize.webp` must not be stored in JSON.
+Each `graphic` value must contain only the exact image filename, such as `headphones.jpg`, not a folder path or local computer path such as `C:\Users\Name\Pictures\prize.webp`.
 
 To try a custom upload using the bundled sample, select `public/config/prizes.json` and all eight JPG files in `public/images/prizes/`. You can also export the current sample JSON, edit its prize details, then upload it with those same images. JSON exports do not include image files.
 
