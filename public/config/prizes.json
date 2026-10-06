@@ -18,7 +18,7 @@
         "en": "Smartwatch",
         "ms": "Jam Tangan Pintar"
       },
-      "quantity": 3,
+      "quantity": 2,
       "probability": 5,
       "tier": "second",
       "graphic": "smartwatch.svg",
@@ -30,7 +30,7 @@
         "en": "Shopping Voucher",
         "ms": "Baucar Beli-belah"
       },
-      "quantity": 5,
+      "quantity": 2,
       "probability": 8,
       "tier": "third",
       "graphic": "voucher.svg",
@@ -42,7 +42,7 @@
         "en": "Power Bank",
         "ms": "Bank Kuasa"
       },
-      "quantity": 8,
+      "quantity": 3,
       "probability": 12,
       "tier": "consolation",
       "graphic": "power-bank.svg",
@@ -54,7 +54,7 @@
         "en": "Bluetooth Speaker",
         "ms": "Pembesar Suara Bluetooth"
       },
-      "quantity": 8,
+      "quantity": 3,
       "probability": 13,
       "tier": "consolation",
       "graphic": "speaker.svg",
@@ -66,7 +66,7 @@
         "en": "Tote Bag",
         "ms": "Beg Tote"
       },
-      "quantity": 12,
+      "quantity": 3,
       "probability": 18,
       "tier": "consolation",
       "graphic": "tote-bag.svg",
@@ -78,7 +78,7 @@
         "en": "Water Bottle",
         "ms": "Botol Air"
       },
-      "quantity": 12,
+      "quantity": 3,
       "probability": 20,
       "tier": "consolation",
       "graphic": "bottle.svg",
@@ -90,7 +90,7 @@
         "en": "Job Fair Gift Pack",
         "ms": "Pek Hadiah Pameran Kerjaya"
       },
-      "quantity": 20,
+      "quantity": 3,
       "probability": 22,
       "tier": "consolation",
       "graphic": "gift-pack.svg",
