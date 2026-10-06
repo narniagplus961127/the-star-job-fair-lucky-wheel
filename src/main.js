@@ -13,14 +13,19 @@ import {
 import { playCelebration } from './effects'
 import { selectPrize } from './game/prizeSelector'
 import { PrizeWheel } from './game/wheel'
-import { i18next, initialiseI18n, supportedLanguages, translateDocument } from './i18n'
+import {
+  DEFAULT_LANGUAGE,
+  i18next,
+  initialiseI18n,
+  supportedLanguages,
+  translateDocument
+} from './i18n'
 import { loadActiveGame, saveActiveGame } from './storage/prizeStorage'
 
 const WIN_REVEAL_PAUSE_MS = 60
 
 const elements = {
   language: document.querySelector('#language-select'),
-  gameTitles: document.querySelectorAll('[data-game-title]'),
   canvas: document.querySelector('#prize-wheel'),
   spin: document.querySelector('#spin-button'),
   wheelSpin: document.querySelector('#wheel-spin-button'),
@@ -34,6 +39,7 @@ const elements = {
   closeSetup: document.querySelector('#close-setup'),
   setupTabs: [...document.querySelectorAll('.setup-tab')],
   setupTabPanels: [...document.querySelectorAll('.setup-tab-panel')],
+  viewJsonGuide: document.querySelector('#view-json-guide'),
   loadSample: document.querySelector('#load-sample'),
   customForm: document.querySelector('#custom-game-form'),
   configFile: document.querySelector('#config-file'),
@@ -55,7 +61,6 @@ const wheel = new PrizeWheel(elements.canvas)
 let activeRecord = null
 let imageUrls = new Map()
 let isSpinning = false
-let hasLanguagePreference = false
 
 function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -133,23 +138,8 @@ function handleSetupTabKeydown(event) {
   activateSetupTab(elements.setupTabs[nextIndex], { focus: true })
 }
 
-function applyTheme(config) {
-  const root = document.documentElement
-  root.style.setProperty('--color-primary', config.game.theme.primaryColor)
-  root.style.setProperty('--color-accent', config.game.theme.accentColor)
-  root.style.setProperty('--color-background', config.game.theme.backgroundColor)
-}
-
-function updateGameTitle() {
-  if (!activeRecord) {
-    return
-  }
-
-  const title = activeRecord.config.game.title[i18next.language]
-  document.title = title
-  elements.gameTitles.forEach((element) => {
-    element.textContent = title
-  })
+function updatePageTitle() {
+  document.title = i18next.t('header.title')
 }
 
 function remainingPrizeCount() {
@@ -228,23 +218,15 @@ function imageMapForRecord(record) {
     : sampleImageUrls(record.config)
 }
 
-async function activateGame(record, { persist = true, useDefaultLanguage = false } = {}) {
+async function activateGame(record, { persist = true } = {}) {
   revokeCustomImageUrls(imageUrls)
   activeRecord = record
   imageUrls = imageMapForRecord(record)
-
-  if (useDefaultLanguage && !hasLanguagePreference) {
-    await i18next.changeLanguage(record.config.game.defaultLanguage)
-    elements.language.value = i18next.language
-    translateDocument()
-  }
 
   if (persist) {
     await saveActiveGame(record)
   }
 
-  applyTheme(record.config)
-  updateGameTitle()
   elements.canvas.setAttribute(
     'aria-label',
     i18next.t('game.wheelLabel', { count: record.config.prizes.length })
@@ -267,7 +249,7 @@ async function useSampleGame({ confirmReplacement = false, showNotice = true } =
 
   try {
     const config = await loadSampleConfiguration()
-    await activateGame({ source: 'sample', config, images: [] }, { useDefaultLanguage: true })
+    await activateGame({ source: 'sample', config, images: [] })
     elements.setupDialog.close()
     if (showNotice) {
       setNotice(i18next.t('setup.sampleLoaded'), 'success')
@@ -302,7 +284,7 @@ async function handleCustomGame(event) {
     const config = validateConfiguration(rawConfig, files)
     const images = files.map((file) => ({ name: file.name, type: file.type, blob: file }))
 
-    await activateGame({ source: 'custom', config, images }, { useDefaultLanguage: true })
+    await activateGame({ source: 'custom', config, images })
     elements.customForm.reset()
     elements.setupDialog.close()
     setNotice(i18next.t('setup.customLoaded'), 'success')
@@ -369,11 +351,12 @@ function showWinner(prize) {
   elements.resultImage.src = imageUrls.get(prize.graphic)
   elements.resultImage.alt = i18next.t('result.imageAlt', { prize: prizeName })
   elements.resultDialog.showModal()
+  const theme = getComputedStyle(document.documentElement)
   playCelebration(elements.celebration, prize.tier, [
-    activeRecord.config.game.theme.primaryColor,
-    activeRecord.config.game.theme.accentColor,
+    theme.getPropertyValue('--color-primary').trim(),
+    theme.getPropertyValue('--color-accent').trim(),
     prize.color,
-    '#ffffff'
+    theme.getPropertyValue('--color-white').trim()
   ])
 }
 
@@ -412,7 +395,7 @@ function exportConfiguration() {
   const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }))
   const link = document.createElement('a')
   link.href = url
-  link.download = `${activeRecord.config.game.id}-updated.json`
+  link.download = 'job-fair-prizes.json'
   link.click()
   URL.revokeObjectURL(url)
 }
@@ -420,9 +403,8 @@ function exportConfiguration() {
 async function changeLanguage(language) {
   await i18next.changeLanguage(language)
   localStorage.setItem('job-fair-wheel-language', language)
-  hasLanguagePreference = true
   translateDocument()
-  updateGameTitle()
+  updatePageTitle()
 
   if (activeRecord) {
     elements.canvas.setAttribute(
@@ -444,6 +426,12 @@ function bindEvents() {
   elements.setupTabs.forEach((tab) => {
     tab.addEventListener('click', () => activateSetupTab(tab))
     tab.addEventListener('keydown', handleSetupTabKeydown)
+  })
+  elements.viewJsonGuide.addEventListener('click', () => {
+    activateSetupTab(
+      elements.setupTabs.find((tab) => tab.id === 'setup-tab-guide'),
+      { focus: true }
+    )
   })
   elements.closeSetup.addEventListener('click', () => elements.setupDialog.close())
   elements.closeResult.addEventListener('click', () => elements.resultDialog.close())
@@ -468,10 +456,12 @@ function bindEvents() {
 
 async function initialise() {
   const savedLanguage = localStorage.getItem('job-fair-wheel-language')
-  hasLanguagePreference = supportedLanguages.includes(savedLanguage)
-  await initialiseI18n(hasLanguagePreference ? savedLanguage : 'en')
+  await initialiseI18n(
+    supportedLanguages.includes(savedLanguage) ? savedLanguage : DEFAULT_LANGUAGE
+  )
   elements.language.value = i18next.language
   translateDocument()
+  updatePageTitle()
   bindEvents()
 
   try {
@@ -490,15 +480,12 @@ async function initialise() {
         }
       })
 
-      await activateGame(
-        { source: 'sample', config: latestSampleConfig, images: [] },
-        { useDefaultLanguage: true }
-      )
+      await activateGame({ source: 'sample', config: latestSampleConfig, images: [] })
     } else if (savedGame) {
       savedGame.config = validateConfiguration(savedGame.config, null, {
         preserveInitialQuantity: true
       })
-      await activateGame(savedGame, { persist: false, useDefaultLanguage: true })
+      await activateGame(savedGame, { persist: false })
     } else {
       await useSampleGame({ showNotice: false })
     }

@@ -6,6 +6,8 @@ export default {
     or: 'or'
   },
   header: {
+    title: 'Job Fair Lucky Wheel',
+    home: 'Job Fair Lucky Wheel home',
     eyebrow: 'The Star Job Fair 2026',
     language: 'Language',
     manage: 'Manage game'
@@ -51,9 +53,6 @@ export default {
     jsonExampleDescription:
       'Use this structure for every custom game. Add one object to the prizes array for each unique prize.',
     jsonRulesTitle: 'JSON field rules',
-    ruleGame: 'A game ID and title in English and Bahasa Malaysia.',
-    ruleLanguage: 'Use en or ms.',
-    ruleTheme: 'Primary, accent and background colours as six-digit hexadecimal values.',
     ruleId: 'A unique, non-empty text ID for the prize.',
     ruleName: 'Prize names in both supported languages.',
     ruleQuantity: 'A whole number of zero or greater.',
@@ -63,7 +62,7 @@ export default {
     ruleColor: 'A six-digit hexadecimal colour.',
     uploadGuideTitle: 'How to upload a custom game',
     uploadStepConfig:
-      'Prepare one JSON file using the format above and include at least two prizes.',
+      'Prepare one JSON file using the JSON guide tab and include at least two prizes. The file must be no larger than 1 MB.',
     uploadStepImages:
       'Prepare every image named in graphic. Use PNG, JPEG or WebP files up to 2 MB each.',
     uploadStepSelect: 'Choose the JSON file, then select all referenced prize images together.',
@@ -71,6 +70,7 @@ export default {
       'Select Load custom game. The files are validated before replacing the active game.',
     uploadGuideNote:
       'JSON and images are selected separately. Every image filename must exactly match its graphic value, including uppercase letters and the file extension.',
+    viewJsonGuide: 'View JSON format',
     eyebrow: 'Game setup',
     title: 'Manage game',
     intro: 'Load a game, review the JSON format or manage the current prize inventory.',
@@ -98,9 +98,7 @@ export default {
     imagesRequired: 'Select all prize image files referenced by the JSON configuration.',
     invalidJson: 'The configuration file does not contain valid JSON.',
     configTooLarge: 'The configuration file must be smaller than 1 MB.',
-    invalidRoot: 'The configuration must contain game details and a prizes list.',
-    invalidGame: 'The game must include an ID, bilingual title and valid theme colours.',
-    invalidLanguage: 'The default language must be en or ms.',
+    invalidRoot: 'The configuration must contain a prizes list.',
     minimumPrizes: 'Add at least two prizes to the configuration.',
     invalidPrize: 'Prize {{number}} is missing required or valid information.',
     duplicatePrize: 'Every prize must have a unique ID.',

@@ -1,18 +1,4 @@
 {
-  "version": 1,
-  "game": {
-    "id": "star-job-fair-2026",
-    "title": {
-      "en": "Job Fair Lucky Wheel",
-      "ms": "Roda Bertuah Pameran Kerjaya"
-    },
-    "defaultLanguage": "en",
-    "theme": {
-      "primaryColor": "#d71920",
-      "accentColor": "#f4c542",
-      "backgroundColor": "#f5f3ef"
-    }
-  },
   "prizes": [
     {
       "id": "grand-prize",

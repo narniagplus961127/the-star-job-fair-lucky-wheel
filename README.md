@@ -18,7 +18,7 @@ A responsive, bilingual spinning-wheel game built with semantic HTML, modular CS
 - Eight bundled sample prizes with individual graphics
 - Browser persistence using IndexedDB
 - Inventory reset and current JSON export
-- Theme colours controlled by the game configuration
+- Wheel-slice colours controlled by the prize configuration
 - Keyboard-friendly controls and reduced-motion support
 - Responsive desktop, tablet and mobile layouts
 
@@ -60,20 +60,6 @@ The bundled configuration is located at `public/config/prizes.json` and includes
 
 ```json
 {
-  "version": 1,
-  "game": {
-    "id": "star-job-fair-2026",
-    "title": {
-      "en": "Job Fair Lucky Wheel",
-      "ms": "Roda Bertuah Pameran Kerjaya"
-    },
-    "defaultLanguage": "en",
-    "theme": {
-      "primaryColor": "#d71920",
-      "accentColor": "#f4c542",
-      "backgroundColor": "#f5f3ef"
-    }
-  },
   "prizes": [
     {
       "id": "grand-prize",
@@ -118,11 +104,13 @@ The bundled configuration is located at `public/config/prizes.json` and includes
 
 The wheel always displays equal-sized slices. Probability affects winner selection, not slice size. When a prize reaches zero, it remains visible as out of stock but is excluded from subsequent selections. The remaining probabilities are then normalized automatically.
 
-`defaultLanguage` must be `en` or `ms`. It is used when the browser does not already have a saved language preference; a visitor's manual language selection takes priority on future visits.
+Only the `prizes` array is needed in JSON. The website title is defined in `src/translations/en.js` and `src/translations/ms.js`, the default language is defined by `DEFAULT_LANGUAGE` in `src/i18n.js`, and the website colours are CSS variables in `src/styles/tokens.css`. English is used until a visitor selects another language; their saved choice is retained when loading a different prize configuration.
+
+Existing configurations that include `version` or `game` are still accepted when their prize data is valid. Those extra fields are ignored and omitted from exports. Previously saved quantities and uploaded images remain usable.
 
 ## Loading a custom game
 
-Open **Manage game**, select one JSON configuration and then select all images referenced by its `graphic` fields.
+Open **Manage game → Load game**. The upload instructions appear above the file selectors. Use **View JSON format** to open the JSON guide, prepare one JSON configuration, then return to **Load game** and select all images referenced by its `graphic` fields. Select **Load custom game** to apply the configuration.
 
 The configuration file must:
 
@@ -154,7 +142,7 @@ The browser requires the JSON and image files to be selected separately. Local c
 
 The active configuration, uploaded image files and remaining quantities are stored in IndexedDB. This allows the game to survive refreshes and browser restarts on the same website origin.
 
-Use **Export current JSON** to download the current quantities. The browser cannot silently overwrite the originally selected JSON file. Use **Reset inventory** to restore the quantities that were present when the current configuration was first loaded.
+Use **Export current JSON** to download the current quantities as `job-fair-prizes.json`, containing only the prize configuration. The browser cannot silently overwrite the originally selected JSON file. Use **Reset inventory** to restore the quantities that were present when the current configuration was first loaded.
 
 Inventory is stored separately for each browser, device and website origin. It is not synchronized across devices, private browsing sessions, Vercel preview URLs or different domains.
 

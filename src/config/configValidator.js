@@ -1,6 +1,5 @@
 const HEX_COLOUR = /^#[0-9a-f]{6}$/i
 const VALID_TIERS = new Set(['grand', 'second', 'third', 'consolation'])
-const VALID_LANGUAGES = new Set(['en', 'ms'])
 const VALID_IMAGE_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp'])
 const MAX_CONFIG_SIZE = 1024 * 1024
 const MAX_IMAGE_SIZE = 2 * 1024 * 1024
@@ -46,26 +45,11 @@ export function validateConfiguration(
   imageFiles = null,
   { preserveInitialQuantity = false } = {}
 ) {
-  if (!config || typeof config !== 'object' || !config.game || !Array.isArray(config.prizes)) {
+  if (!config || typeof config !== 'object' || !Array.isArray(config.prizes)) {
     throw new ConfigurationError('errors.invalidRoot')
   }
 
-  const { game, prizes } = config
-  if (
-    typeof game.id !== 'string' ||
-    !game.id.trim() ||
-    !hasBilingualText(game.title) ||
-    !game.theme ||
-    !HEX_COLOUR.test(game.theme.primaryColor) ||
-    !HEX_COLOUR.test(game.theme.accentColor) ||
-    !HEX_COLOUR.test(game.theme.backgroundColor)
-  ) {
-    throw new ConfigurationError('errors.invalidGame')
-  }
-
-  if (!VALID_LANGUAGES.has(game.defaultLanguage)) {
-    throw new ConfigurationError('errors.invalidLanguage')
-  }
+  const { prizes } = config
 
   if (prizes.length < 2) {
     throw new ConfigurationError('errors.minimumPrizes')
@@ -110,10 +94,14 @@ export function validateConfiguration(
   }
 
   return {
-    ...structuredClone(config),
-    version: Number.isInteger(config.version) ? config.version : 1,
     prizes: prizes.map((prize) => ({
-      ...structuredClone(prize),
+      id: prize.id,
+      name: { en: prize.name.en, ms: prize.name.ms },
+      quantity: prize.quantity,
+      probability: prize.probability,
+      tier: prize.tier,
+      graphic: prize.graphic,
+      color: prize.color,
       initialQuantity:
         preserveInitialQuantity &&
         Number.isInteger(prize.initialQuantity) &&
@@ -138,7 +126,6 @@ export async function readConfigurationFile(file) {
 
 export function exportableConfiguration(config) {
   return {
-    ...structuredClone(config),
-    prizes: config.prizes.map(({ initialQuantity, ...prize }) => prize)
+    prizes: validateConfiguration(config).prizes.map(({ initialQuantity, ...prize }) => prize)
   }
 }

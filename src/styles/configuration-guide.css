@@ -79,7 +79,14 @@
 
 .upload-guide {
   padding: 1.25rem;
-  border-top: 1px solid var(--color-border);
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.upload-guide-link {
+  margin-top: 1rem;
 }
 
 .upload-steps {

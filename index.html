@@ -18,10 +18,15 @@
     <div class="app-shell">
       <header class="site-header">
         <div class="site-header-content content-container">
-          <a class="brand" href="#game-main" aria-label="Job Fair Lucky Wheel home">
+          <a
+            class="brand"
+            href="#game-main"
+            aria-label="Job Fair Lucky Wheel home"
+            data-i18n-aria-label="header.home"
+          >
             <span class="brand-mark" aria-hidden="true">T</span>
             <span class="brand-copy">
-              <strong data-game-title>Job Fair Lucky Wheel</strong>
+              <strong data-i18n="header.title">Job Fair Lucky Wheel</strong>
               <small data-i18n="header.eyebrow">The Star Job Fair 2026</small>
             </span>
           </a>
@@ -223,20 +228,6 @@
                   each unique prize.
                 </p>
                 <pre class="configuration-code"><code>{
-  "version": 1,
-  "game": {
-    "id": "job-fair-wheel-2026",
-    "title": {
-      "en": "Job Fair Lucky Wheel",
-      "ms": "Roda Bertuah Pameran Kerjaya"
-    },
-    "defaultLanguage": "en",
-    "theme": {
-      "primaryColor": "#d71920",
-      "accentColor": "#f4c542",
-      "backgroundColor": "#f5f3ef"
-    }
-  },
   "prizes": [
     {
       "id": "grand-prize",
@@ -269,22 +260,6 @@
               <section class="configuration-guide-panel" aria-labelledby="json-rules-title">
                 <h3 id="json-rules-title" data-i18n="setup.jsonRulesTitle">JSON field rules</h3>
                 <dl class="configuration-rules">
-                  <div class="configuration-rule">
-                    <dt>game.id / game.title</dt>
-                    <dd data-i18n="setup.ruleGame">
-                      A game ID and title in English and Bahasa Malaysia.
-                    </dd>
-                  </div>
-                  <div class="configuration-rule">
-                    <dt>defaultLanguage</dt>
-                    <dd data-i18n="setup.ruleLanguage">Use en or ms.</dd>
-                  </div>
-                  <div class="configuration-rule">
-                    <dt>theme</dt>
-                    <dd data-i18n="setup.ruleTheme">
-                      Primary, accent and background colours as six-digit hexadecimal values.
-                    </dd>
-                  </div>
                   <div class="configuration-rule">
                     <dt>id</dt>
                     <dd data-i18n="setup.ruleId">A unique, non-empty text ID for the prize.</dd>
@@ -320,30 +295,6 @@
                 </dl>
               </section>
             </div>
-
-            <section class="upload-guide" aria-labelledby="upload-guide-title">
-              <h3 id="upload-guide-title" data-i18n="setup.uploadGuideTitle">
-                How to upload a custom game
-              </h3>
-              <ol class="upload-steps">
-                <li data-i18n="setup.uploadStepConfig">
-                  Prepare one JSON file using the format above and include at least two prizes.
-                </li>
-                <li data-i18n="setup.uploadStepImages">
-                  Prepare every image named in graphic. Use PNG, JPEG or WebP files up to 2 MB each.
-                </li>
-                <li data-i18n="setup.uploadStepSelect">
-                  Choose the JSON file, then select all referenced prize images together.
-                </li>
-                <li data-i18n="setup.uploadStepLoad">
-                  Select Load custom game. The files are validated before replacing the active game.
-                </li>
-              </ol>
-              <p class="upload-guide-note" data-i18n="setup.uploadGuideNote">
-                JSON and images are selected separately. Every image filename must exactly match its
-                graphic value, including uppercase letters and the file extension.
-              </p>
-            </section>
           </div>
         </section>
 
@@ -358,6 +309,39 @@
           </button>
 
           <div class="divider"><span data-i18n="common.or">or</span></div>
+
+          <section class="upload-guide" aria-labelledby="upload-guide-title">
+            <h3 id="upload-guide-title" data-i18n="setup.uploadGuideTitle">
+              How to upload a custom game
+            </h3>
+            <ol class="upload-steps">
+              <li data-i18n="setup.uploadStepConfig">
+                Prepare one JSON file using the JSON guide tab and include at least two prizes. The
+                file must be no larger than 1 MB.
+              </li>
+              <li data-i18n="setup.uploadStepImages">
+                Prepare every image named in graphic. Use PNG, JPEG or WebP files up to 2 MB each.
+              </li>
+              <li data-i18n="setup.uploadStepSelect">
+                Choose the JSON file, then select all referenced prize images together.
+              </li>
+              <li data-i18n="setup.uploadStepLoad">
+                Select Load custom game. The files are validated before replacing the active game.
+              </li>
+            </ol>
+            <p class="upload-guide-note" data-i18n="setup.uploadGuideNote">
+              JSON and images are selected separately. Every image filename must exactly match its
+              graphic value, including uppercase letters and the file extension.
+            </p>
+            <button
+              id="view-json-guide"
+              class="button button-quiet upload-guide-link"
+              type="button"
+              data-i18n="setup.viewJsonGuide"
+            >
+              View JSON format
+            </button>
+          </section>
 
           <form id="custom-game-form" class="setup-form" novalidate>
             <label class="file-field" for="config-file">

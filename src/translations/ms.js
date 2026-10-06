@@ -6,6 +6,8 @@ export default {
     or: 'atau'
   },
   header: {
+    title: 'Roda Bertuah Pameran Kerjaya',
+    home: 'Halaman utama Roda Bertuah Pameran Kerjaya',
     eyebrow: 'Pameran Kerjaya The Star 2026',
     language: 'Bahasa',
     manage: 'Urus permainan'
@@ -53,9 +55,6 @@ export default {
     jsonExampleDescription:
       'Gunakan struktur ini untuk setiap permainan tersuai. Tambahkan satu objek dalam tatasusunan prizes bagi setiap hadiah unik.',
     jsonRulesTitle: 'Peraturan medan JSON',
-    ruleGame: 'ID permainan dan tajuk dalam bahasa Inggeris dan Bahasa Malaysia.',
-    ruleLanguage: 'Gunakan en atau ms.',
-    ruleTheme: 'Warna utama, aksen dan latar belakang sebagai nilai perenambelasan enam digit.',
     ruleId: 'ID teks yang unik dan tidak kosong untuk hadiah.',
     ruleName: 'Nama hadiah dalam kedua-dua bahasa yang disokong.',
     ruleQuantity: 'Nombor bulat sifar atau lebih besar.',
@@ -65,7 +64,7 @@ export default {
     ruleColor: 'Warna perenambelasan enam digit.',
     uploadGuideTitle: 'Cara memuat naik permainan tersuai',
     uploadStepConfig:
-      'Sediakan satu fail JSON menggunakan format di atas dan sertakan sekurang-kurangnya dua hadiah.',
+      'Sediakan satu fail JSON menggunakan tab Panduan JSON dan sertakan sekurang-kurangnya dua hadiah. Saiz fail tidak boleh melebihi 1 MB.',
     uploadStepImages:
       'Sediakan setiap imej yang dinamakan dalam graphic. Gunakan fail PNG, JPEG atau WebP sehingga 2 MB setiap satu.',
     uploadStepSelect:
@@ -74,6 +73,7 @@ export default {
       'Pilih Muatkan permainan tersuai. Fail akan disahkan sebelum menggantikan permainan aktif.',
     uploadGuideNote:
       'JSON dan imej dipilih secara berasingan. Setiap nama fail imej mesti sepadan tepat dengan nilai graphic, termasuk huruf besar dan sambungan fail.',
+    viewJsonGuide: 'Lihat format JSON',
     eyebrow: 'Tetapan permainan',
     title: 'Urus permainan',
     intro: 'Muatkan permainan, semak format JSON atau urus inventori hadiah semasa.',
@@ -101,9 +101,7 @@ export default {
     imagesRequired: 'Pilih semua fail imej hadiah yang dirujuk oleh konfigurasi JSON.',
     invalidJson: 'Fail konfigurasi tidak mengandungi JSON yang sah.',
     configTooLarge: 'Fail konfigurasi mesti lebih kecil daripada 1 MB.',
-    invalidRoot: 'Konfigurasi mesti mengandungi butiran permainan dan senarai hadiah.',
-    invalidGame: 'Permainan mesti mempunyai ID, tajuk dwibahasa dan warna tema yang sah.',
-    invalidLanguage: 'Bahasa lalai mestilah en atau ms.',
+    invalidRoot: 'Konfigurasi mesti mengandungi senarai hadiah.',
     minimumPrizes: 'Tambahkan sekurang-kurangnya dua hadiah pada konfigurasi.',
     invalidPrize: 'Hadiah {{number}} tidak mempunyai maklumat yang diperlukan atau sah.',
     duplicatePrize: 'Setiap hadiah mesti mempunyai ID yang unik.',

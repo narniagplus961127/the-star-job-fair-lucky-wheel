@@ -3,13 +3,14 @@ import en from './translations/en'
 import ms from './translations/ms'
 
 const supportedLanguages = ['en', 'ms']
+export const DEFAULT_LANGUAGE = 'en'
 
 export async function initialiseI18n(language) {
-  const selectedLanguage = supportedLanguages.includes(language) ? language : 'en'
+  const selectedLanguage = supportedLanguages.includes(language) ? language : DEFAULT_LANGUAGE
 
   await i18next.init({
     lng: selectedLanguage,
-    fallbackLng: 'en',
+    fallbackLng: DEFAULT_LANGUAGE,
     resources: {
       en: { translation: en },
       ms: { translation: ms }
