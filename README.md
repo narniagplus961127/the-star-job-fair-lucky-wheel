@@ -169,11 +169,3 @@ src/effects.js        Tier-specific prize animations
 src/i18n.js           Language initialization and translation handling
 src/main.js           Application orchestration and interface events
 ```
-
-## Data and security notes
-
-- Imported JSON is validated before use.
-- User-provided names are rendered as text rather than HTML.
-- Custom file type and size restrictions are enforced.
-- Random selection uses `crypto.getRandomValues()`.
-- No selected files or game data are uploaded to a server.
