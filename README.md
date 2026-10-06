@@ -22,6 +22,20 @@ A responsive, bilingual spinning-wheel game built with semantic HTML, modular CS
 - Keyboard-friendly controls and reduced-motion support
 - Responsive desktop, tablet and mobile layouts
 
+## Prize effects and winner popups
+
+Each prize tier has a distinct celebration effect and a winner popup showing the prize image, name and confirmation message. The screenshots below capture individual animation frames; open the [live demo](https://the-star-practical-test2.vercel.app/) to see the full motion.
+
+| Grand prize                                                                                    | Second prize                                                                             |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| ![Grand-prize confetti and Wireless Headphones winner popup](docs/screenshots/grand-prize.jpg) | ![Second-prize streamers and Smartwatch winner popup](docs/screenshots/second-prize.jpg) |
+| Confetti and a starburst, with a glowing popup and pulsing prize image.                        | Side streamers, a shimmer across the popup and a bouncing prize image.                   |
+
+| Third place                                                                                      | Consolation prize                                                                                 |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| ![Third-place bronze sparks and Shopping Voucher winner popup](docs/screenshots/third-place.jpg) | ![Consolation-prize balloons and Power Bank winner popup](docs/screenshots/consolation-prize.jpg) |
+| Bronze sparks, a bronze popup border and a settling prize image.                                 | Rising balloons and a gift badge, with a popping prize image.                                     |
+
 ## Requirements
 
 - Node.js 20.19 or newer, or Node.js 22.12 or newer
@@ -149,6 +163,7 @@ Inventory is stored separately for each browser, device and website origin. It i
 ## Source structure
 
 ```text
+docs/screenshots/     Prize-effect and winner-popup screenshots
 public/config/        Bundled prize configuration
 public/images/prizes/ Bundled sample prize graphics
 src/config/           Configuration loading and validation
