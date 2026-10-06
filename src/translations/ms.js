@@ -81,7 +81,8 @@ export default {
     configLabel: 'Fail konfigurasi',
     configHelp: 'Pilih satu fail JSON.',
     imagesLabel: 'Imej hadiah',
-    imagesHelp: 'Pilih fail PNG, JPEG atau WebP yang dirujuk dalam JSON.',
+    imagesHelp:
+      'Anda boleh memilih beberapa imej serentak. Sertakan semua imej yang dirujuk dalam JSON (PNG, JPEG atau WebP, sehingga 2 MB setiap satu).',
     load: 'Muatkan permainan tersuai',
     loading: 'Sedang memuatkan permainan…',
     inventoryTitle: 'Kawalan inventori',

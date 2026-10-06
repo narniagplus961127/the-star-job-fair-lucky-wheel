@@ -353,7 +353,8 @@
             <label class="file-field" for="image-files">
               <span class="file-label" data-i18n="setup.imagesLabel">Prize images</span>
               <span class="file-help" data-i18n="setup.imagesHelp">
-                Select the PNG, JPEG or WebP files referenced by the JSON.
+                You can select multiple images at once. Include all images referenced in the JSON
+                (PNG, JPEG or WebP, up to 2 MB each).
               </span>
               <input
                 id="image-files"
@@ -364,7 +365,19 @@
               />
             </label>
 
-            <button id="load-custom" class="button button-primary full-width" type="submit">
+            <div
+              id="custom-game-error"
+              class="form-error custom-game-error"
+              role="alert"
+              hidden
+            ></div>
+
+            <button
+              id="load-custom"
+              class="button button-primary full-width"
+              type="submit"
+              aria-describedby="custom-game-error"
+            >
               <span data-i18n="setup.load">Load custom game</span>
             </button>
           </form>

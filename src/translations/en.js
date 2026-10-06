@@ -78,7 +78,8 @@ export default {
     configLabel: 'Configuration file',
     configHelp: 'Select one JSON file.',
     imagesLabel: 'Prize images',
-    imagesHelp: 'Select the PNG, JPEG or WebP files referenced by the JSON.',
+    imagesHelp:
+      'You can select multiple images at once. Include all images referenced in the JSON (PNG, JPEG or WebP, up to 2 MB each).',
     load: 'Load custom game',
     loading: 'Loading game…',
     inventoryTitle: 'Inventory controls',

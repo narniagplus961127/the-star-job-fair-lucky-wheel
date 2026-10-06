@@ -45,6 +45,7 @@ const elements = {
   configFile: document.querySelector('#config-file'),
   imageFiles: document.querySelector('#image-files'),
   setupError: document.querySelector('#setup-error'),
+  customGameError: document.querySelector('#custom-game-error'),
   loadCustom: document.querySelector('#load-custom'),
   exportConfig: document.querySelector('#export-config'),
   resetInventory: document.querySelector('#reset-inventory'),
@@ -80,7 +81,7 @@ function setNotice(message = '', type = 'info') {
   elements.status.dataset.type = type
 }
 
-function setSetupError(error) {
+function setSetupError(error, target = elements.setupError) {
   let message = i18next.t('errors.loadFailed')
 
   if (error instanceof ConfigurationError) {
@@ -89,13 +90,19 @@ function setSetupError(error) {
     message = i18next.t('errors.storageFailed')
   }
 
-  elements.setupError.textContent = message
-  elements.setupError.hidden = false
+  target.textContent = message
+  target.hidden = false
+
+  if (target === elements.customGameError && elements.setupDialog.open) {
+    elements.loadCustom.scrollIntoView({ block: 'nearest', behavior: 'instant' })
+  }
 }
 
 function clearSetupError() {
-  elements.setupError.hidden = true
-  elements.setupError.textContent = ''
+  for (const target of [elements.setupError, elements.customGameError]) {
+    target.hidden = true
+    target.textContent = ''
+  }
 }
 
 function activateSetupTab(activeTab, { focus = false } = {}) {
@@ -199,6 +206,10 @@ function createInventoryItem(prize) {
 }
 
 function renderInventory() {
+  if (isSpinning) {
+    return
+  }
+
   elements.prizeList.replaceChildren()
 
   if (!activeRecord) {
@@ -267,12 +278,12 @@ async function handleCustomGame(event) {
   const files = [...elements.imageFiles.files]
 
   if (!configFile) {
-    setSetupError(new ConfigurationError('errors.configRequired'))
+    setSetupError(new ConfigurationError('errors.configRequired'), elements.customGameError)
     return
   }
 
   if (!files.length) {
-    setSetupError(new ConfigurationError('errors.imagesRequired'))
+    setSetupError(new ConfigurationError('errors.imagesRequired'), elements.customGameError)
     return
   }
 
@@ -289,7 +300,7 @@ async function handleCustomGame(event) {
     elements.setupDialog.close()
     setNotice(i18next.t('setup.customLoaded'), 'success')
   } catch (error) {
-    setSetupError(error)
+    setSetupError(error, elements.customGameError)
   } finally {
     elements.loadCustom.disabled = false
     elements.loadCustom.textContent = i18next.t('setup.load')
@@ -315,17 +326,17 @@ async function handleSpin() {
 
   try {
     await saveActiveGame(activeRecord)
-    renderInventory()
 
+    // Keep the displayed inventory unchanged until the winner is revealed.
     const prizeIndex = activeRecord.config.prizes.findIndex((prize) => prize.id === winner.id)
     await wheel.spinTo(prizeIndex)
-    wheel.updatePrizes(activeRecord.config.prizes)
 
     if (!prefersReducedMotion()) {
       await wait(WIN_REVEAL_PAUSE_MS)
     }
 
     showWinner(winner)
+    wheel.updatePrizes(activeRecord.config.prizes)
   } catch {
     winner.quantity += 1
     setNotice(i18next.t('errors.storageFailed'), 'error')
